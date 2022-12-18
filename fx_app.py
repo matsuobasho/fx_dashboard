@@ -34,36 +34,25 @@ price_fig = go.Figure(data=[go.Candlestick(x=df.index,
                 low=df['Low'],
                 close=df['Close'])]).update_layout(xaxis_rangeslider_visible=False)
 
-nik_fig = make_subplots(specs=[[{"secondary_y": True}]])
+def create_double_ax_plot(df1, df2, df1_label, df2_label):
+    tmp = make_subplots(specs=[[{"secondary_y": True}]])
+    tmp.add_trace(
+            go.Scatter(x=df1.index, y=df1.Close, name=df1_label),
+            secondary_y=False,
+            )
+    tmp.add_trace(
+            go.Scatter(x=df2.index, y=df2.Close, name=df2_label),
+            secondary_y=True,
+    )
 
-nik_fig.add_trace(
-    go.Scatter(x=nikkei.index, y=nikkei.Close, name="Nikkei"),
-    secondary_y=False,
-)
-nik_fig.add_trace(
-    go.Scatter(x=df.index, y=df.Close, name="USD/JPY"),
-    secondary_y=True,
-)
+    tmp.update_xaxes(title_text="Date")
+    tmp.update_yaxes(title_text=df1_label, secondary_y=False)
+    tmp.update_yaxes(title_text=df2_label, secondary_y=True)
 
-nik_fig.update_xaxes(title_text="Date")
-nik_fig.update_yaxes(title_text="Nikkei index", secondary_y=False)
-nik_fig.update_yaxes(title_text="USD/JPY rate", secondary_y=True)
+    return tmp
 
-sp_fig = make_subplots(specs=[[{"secondary_y": True}]])
-
-sp_fig.add_trace(
-    go.Scatter(x=sp.index, y=sp.Close, name="S&P"),
-    secondary_y=False,
-)
-sp_fig.add_trace(
-    go.Scatter(x=df.index, y=df.Close, name="USD/JPY"),
-    secondary_y=True,
-)
-
-sp_fig.update_xaxes(title_text="Date")
-sp_fig.update_yaxes(title_text="S&P 500", secondary_y=False)
-sp_fig.update_yaxes(title_text="USD/JPY rate", secondary_y=True)
-
+nik_fig = create_double_ax_plot(nikkei, df, 'Nikkei', 'USD/JPY rate')
+sp_fig = create_double_ax_plot(sp, df, 'S&P', 'USD/JPY rate')
 
 # App Layout *******************************************
 
