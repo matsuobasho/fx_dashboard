@@ -68,7 +68,7 @@ app.layout = dbc.Container(
         dbc.Row(
             dbc.Col(
                 html.H2(
-                    "The incredible USD/JPY analyzer",
+                    "USD/JPY Dashboard",
                     className="text-center bg-primary text-white p-2",
                 ),
             )
