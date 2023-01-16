@@ -18,10 +18,10 @@ end = pd.to_datetime(date.today())
 df = data.DataReader('USDJPY%3DX', data_source='yahoo', start=start, end=end)
 df_mod = df.copy()
 
-df_mod['1day'] = (df_mod.High - df_mod.Low) * 100
-df_mod['2day'] = df_mod['1day'].rolling(2).mean()
-df_mod['5day'] = df_mod['1day'].rolling(5).mean()
-df_mod['10day'] = df_mod['1day'].rolling(10).mean()
+df_mod['1-day'] = (df_mod.High - df_mod.Low) * 100
+df_mod['2-day'] = df_mod['1-day'].rolling(2).mean()
+df_mod['5-day'] = df_mod['1-day'].rolling(5).mean()
+df_mod['10-day'] = df_mod['1-day'].rolling(10).mean()
 
 nikkei = data.DataReader('^N225', start='2022-01-01', data_source='yahoo')
 sp = data.DataReader('^GSPC', start='2022-01-01', data_source='yahoo')
@@ -89,8 +89,8 @@ app.layout = dbc.Container(
                         width=12,lg=5),
                 dbc.Col([dbc.RadioItems(
                             id='sma-radio',
-                            options=[{"label": i, "value": i} for i in ['1day', '2day', '5day', '10day']],
-                            value='10day',
+                            options=[{"label": i, "value": i} for i in ['1-day', '2-day', '5-day', '10-day']],
+                            value='10-day',
                             #input_class_name="mt-5",
                             )
                         ]
