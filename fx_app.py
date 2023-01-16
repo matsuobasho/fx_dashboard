@@ -56,7 +56,7 @@ sp_fig = create_double_ax_plot(sp, df, 'S&P', 'USD/JPY rate')
 
 # App Layout *******************************************
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.LITERA])
+app = Dash(__name__, external_stylesheets=[dbc.themes.LUX])
 
 # def update_data():
 #     # !! reset_index because otherwise plotly doesn't recognize the index as a x input in go.Figure
