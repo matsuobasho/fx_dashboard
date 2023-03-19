@@ -15,7 +15,7 @@ from datetime import date
 start = pd.to_datetime('2022-01-01')
 end = pd.to_datetime(date.today())
 
-# upload manually since there's a monthly rate limit
+# upload manually since there's a monthly rate limit on metals-api.com
 gold = pd.read_pickle('gold_price.pkl')
 gold.columns = ['Close']
 
