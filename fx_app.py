@@ -15,6 +15,10 @@ from datetime import date
 start = pd.to_datetime('2022-01-01')
 end = pd.to_datetime(date.today())
 
+# upload manually since there's a monthly rate limit
+gold = pd.read_pickle('gold_price.pkl')
+gold.columns = ['Close']
+
 df = data.DataReader('USDJPY%3DX', data_source='yahoo', start=start, end=end)
 df_mod = df.copy()
 
@@ -25,6 +29,8 @@ df_mod['10-day'] = df_mod['1-day'].rolling(10).mean()
 
 nikkei = data.DataReader('^N225', start='2022-01-01', data_source='yahoo')
 sp = data.DataReader('^GSPC', start='2022-01-01', data_source='yahoo')
+btc = data.DataReader('BTC-USD', start='2022-01-01', data_source='yahoo')
+
 
 # Figures
 
@@ -53,6 +59,8 @@ def create_double_ax_plot(df1, df2, df1_label, df2_label):
 
 nik_fig = create_double_ax_plot(nikkei, df, 'Nikkei', 'USD/JPY rate')
 sp_fig = create_double_ax_plot(sp, df, 'S&P', 'USD/JPY rate')
+gold_fig = create_double_ax_plot(gold, df, 'Gold', 'USD/JPY rate')
+btc_fig = create_double_ax_plot(btc, df, 'Bitcoin', 'USD/JPY rate')
 
 # App Layout *******************************************
 
@@ -111,6 +119,18 @@ app.layout = dbc.Container(
                     ),
                 dbc.Col(
                     dcc.Graph(id="sp", figure=sp_fig),
+                    width=12, lg=6
+                    ),
+            ]
+            ),
+        dbc.Row(
+            [
+                dbc.Col(
+                    dcc.Graph(id="gold", figure=gold_fig),
+                    width=12, lg=6
+                    ),
+                dbc.Col(
+                    dcc.Graph(id="btc", figure=btc_fig),
                     width=12, lg=6
                     ),
             ]
